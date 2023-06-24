@@ -1,6 +1,6 @@
 import Table from 'react-bootstrap/Table';
 import { useDispatch } from 'react-redux';
-import { deleteProduct } from '../stores/action';
+import { deleteProduct, updateProduct } from '../stores/action';
 
 function Cart({ cartStore }) {
 
@@ -14,8 +14,16 @@ function Cart({ cartStore }) {
     dispatch(deleteProduct(id))
   }
 
+  const handleUpdate = (id,newQuantity) => {
+    dispatch(updateProduct({
+      id : id ,
+      newQuantity:newQuantity
+    }))
+  }
+
   return (
-    <Table striped bordered hover size="sm" className='Cart'>
+   <div className='cart-container'>
+     <Table striped bordered hover size="sm" className='Cart'>
       <thead>
         <tr >
           <th colSpan={6} style={{ backgroundColor: "rgb(242, 222, 222)", color: "rgb(188, 31, 38)", textAlign: "left" }}> <h4 style={{ paddingLeft: "20px" }}>Your Cart</h4></th>
@@ -36,14 +44,18 @@ function Cart({ cartStore }) {
               <td>{index + 1}</td>
               <td>{item.name}</td>
               <td>{USDollar.format(item.price)}</td>
-              <td><input type="number" value={item.quantity} style={{ width: "50px" }} /></td>
+              <td><input className='inputQuantity' type="number" defaultValue={item.quantity} style={{ width: "50px" }} /></td>
               <td>{USDollar.format(item.quantity * item.price)}</td>
               <td className='actionButton'>
                 <button className='delButton' onClick={() => handleDelete(item.id)}>Delete</button>
-                <button className='delButton'>Update</button>
+                <button onClick={() =>    
+                  { let newQuantity = document.querySelector(".inputQuantity").value;
+                  if(newQuantity) {
+                    handleUpdate(item.id,newQuantity)
+                  }
+                   }} className='updateButton'>Update</button>
               </td>
             </tr>
-
           ))
         }
         <tr>
@@ -51,6 +63,7 @@ function Cart({ cartStore }) {
         </tr>
       </tbody>
     </Table>
+   </div>
   );
 }
 

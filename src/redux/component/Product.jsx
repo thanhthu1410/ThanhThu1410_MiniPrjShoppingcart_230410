@@ -1,13 +1,24 @@
 import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../stores/action';
 
 
-export default function Product({ item, handleAddProduct}) {
-    const [quantity, setQuantity] = useState(1)
+export default function Product({item}) {
     const USDollar = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
       });
+
+      const dispatch = useDispatch();
+    
+      function formSubmit(event, product) {
+        event.preventDefault();
+        dispatch(addProduct({
+            product: product,
+            quantity: parseInt(event.target.quantity.value)
+        }))
+      }
    
     return (
         <div style={{ display: "flex" }} >
@@ -20,12 +31,11 @@ export default function Product({ item, handleAddProduct}) {
                     </Card.Text>
                 </Card.Body>
             </Card>
-            <div className='action'>
-                <input style={{ textAlign: "center" }} type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity} />
-                <button style={{backgroundColor:"#ff6633", border:"none"}} onClick={() => {
-                    handleAddProduct({ ...item, quantity: quantity });
-                }}>{USDollar.format(item.price)}</button>
-            </div>
+            <form className='action' onSubmit={(e) => formSubmit(e, item)}>
+                <input style={{ textAlign: "center" }} type="number" name="quantity" defaultValue={1}/>
+                <button style={{backgroundColor:"#ff6633", border:"none"}}>{USDollar.format(item.price)}</button>
+            </form>
         </div>
     )
 }
+

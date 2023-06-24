@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, DELETE_PRODUCT } from "./constant"
+import { ADD_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT } from "./constant"
 
 const listProducts = [
     {
@@ -44,10 +44,28 @@ const initState = {
 const addToCartReducer = (state = initState, action) => {
     switch (action.type) {
         case ADD_PRODUCT:
-            localStorage.setItem("Cart", JSON.stringify([...state.cart, action.newProduct]))
-            return {
-                ...state,
-                cart: [...state.cart, action.newProduct]
+            let temState = [...state.cart]
+            let check = temState.find((product) => product.id === action.payload.product.id)
+            if (!check) {
+                temState.push({...action.payload.product, quantity: action.payload.quantity})
+                localStorage.setItem("Cart", JSON.stringify(temState))
+                return {
+                    ...state,
+                    cart: temState
+                }
+            } else {
+                temState.map((product) => {
+                    if (product.id === action.payload.product.id) {
+                        return product.quantity += action.payload.quantity
+                    } else {
+                        return product
+                    }
+                })
+                localStorage.setItem("Cart", JSON.stringify(temState))
+                return {
+                    ...state,
+                    cart: temState
+                }
             }
         case DELETE_PRODUCT:
             localStorage.setItem("Cart", JSON.stringify(state.cart.filter((product) => product.id !== action.id)))
@@ -55,7 +73,9 @@ const addToCartReducer = (state = initState, action) => {
                 ...state,
                 cart: state.cart.filter((product) => product.id !== action.id)
             }
-
+        case UPDATE_PRODUCT:
+            console.log(action.payload);
+            
         default:
             return {
                 ...state,

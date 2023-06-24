@@ -1,10 +1,8 @@
-import { ADD_PRODUCT, DELETE_PRODUCT } from "./constant"
+import { ADD_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT } from "./constant"
 
-export const addProduct = (newProduct) => ({
-  
+export const addProduct = (payload) => ({
     type: ADD_PRODUCT,
-    newProduct: newProduct
-
+    payload: payload
 })
 
 export const deleteProduct = (id) => ({
@@ -12,3 +10,7 @@ export const deleteProduct = (id) => ({
         id : id  
 })
 
+export  const updateProduct = (payload) => ({
+    type : UPDATE_PRODUCT,
+    payload : payload 
+})

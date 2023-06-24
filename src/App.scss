@@ -51,24 +51,30 @@
   
    
   }
-  
-  .Cart{
+  .cart-container{
     width: 50%;
-    
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    font-family: sans-serif;
-    .actionButton{
-      button{
-        margin:  auto 10px;
-        padding: 0 10px;
-        border: none;
-        color: #fff;
-      }
-      .delButton{
-        background-color: blue;
+    .Cart{
+      width: 100%;
+      
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      font-family: sans-serif;
+      .actionButton{
+        button{
+          margin:  auto 10px;
+          padding: 0 10px;
+          border: none;
+          color: #fff;
+        }
+        .delButton{
+          background-color: blue;
+        }
+        .updateButton{
+          background-color:rgb(188, 31, 38);
+        }
       }
     }
   }
+  
 }

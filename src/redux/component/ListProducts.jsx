@@ -6,10 +6,10 @@ import Product from './Product';
 
 
 export default function ListProducts({productStore}) {
-    const dispatch = useDispatch()
-    const handleAddProduct = (item, index) => {   
-        dispatch(addProduct(item))
-    }
+    // const dispatch = useDispatch()
+    // const handleAddProduct = (item, index) => {   
+    //     dispatch(addProduct(item))
+    // }
     return (
         <div className='containerAll'>
             <div className='container-left'>
@@ -19,7 +19,7 @@ export default function ListProducts({productStore}) {
                 <div className='renderList'>
                     {
                         productStore.map((item, index) => (
-                            <Product item={item} key={index} handleAddProduct={handleAddProduct}/>
+                            <Product item={item} key={index}/>
                         ))
                     }
                 </div>
